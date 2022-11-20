@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Outlet, Route, Routes } from 'react-router-dom'
 import Button from './components/atoms/Button'
 import Login from './components/molecules/Login/Login'
@@ -8,8 +8,15 @@ import HomePage from './components/pages/HomePage/HomePage'
 import AuthPage from './components/pages/AuthPage/AuthPage'
 import BlogList from './components/organisms/BlogList/BlogList'
 import AddBlog from './components/organisms/AddBlog/AddBlog'
+import AuthContext from './context/AuthContext'
 
 export default function App() {
+  let contextData= useContext(AuthContext)
+
+  if(sessionStorage.getItem("login")){
+    contextData.setLoggedIn(true)
+  }
+  console.log(contextData.loggedIn)
   return (
     <React.Fragment>
       
@@ -17,8 +24,8 @@ export default function App() {
         <Route index element={<HomePage/>}/>
         <Route path='/' element={<HomePage/>}>
             <Route index element={<BlogList/>}/>
-            <Route path='allBlogs' element={<BlogList/>}/>
-            <Route path='myBlogs' element={<BlogList/>}/>
+            <Route path='/:id' element={<BlogList/>}/>
+            {/* <Route path='/myBlogs' element={<BlogList/>}/> */}
             <Route path="addBlog" element={<AddBlog/>}/>
         </Route>
         <Route path='auth' element={<AuthPage/>}> 

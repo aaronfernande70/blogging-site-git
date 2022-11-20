@@ -35,14 +35,17 @@ export default function Login() {
     }
   };
   const onSubmitHandler = (e) => {
-    alert("clicked")
+
     checkLogin(loginForm)
       .then(data=>{
         console.log(data)
         if(data.length){
           alert("Loggedin Succefullly!")
             contextData.setLoggedIn(true)
-          navigate("/allBlogs")
+            sessionStorage.setItem("login",true)
+            sessionStorage.setItem("user-id",data[0].id)
+          navigate("/allBlogs")   
+ 
 
         }
         else{
